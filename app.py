@@ -1,11 +1,73 @@
 import os
-from flask import Flask, request, render_template
+from flask import Flask, request, render_template, redirect, url_for
 from lib.database_connection import get_flask_database_connection
+from lib.album_repository import AlbumRepository
+from lib.album import Album
+from lib.artist_repository import ArtistRepository
+from lib.artist import Artist
 
 # Create a new Flask app
 app = Flask(__name__)
 
 # == Your Routes Here ==
+
+# Albums
+
+@app.route('/albums')
+def get_albums():
+    connection = get_flask_database_connection(app)
+    repository = AlbumRepository(connection)
+    albums = repository.all()
+    return render_template('record_store.html', albums=albums)
+
+@app.route('/albums/<int:id>')
+def get_album_with_id(id):
+    connection = get_flask_database_connection(app)
+    repository = AlbumRepository(connection)
+    album = repository.find(id)
+    return render_template('record.html', album=album)
+
+@app.route('/albums/new')
+def get_new_album():
+    return render_template('new_record.html')
+
+@app.route('/albums/', methods=['POST'])
+def post_album():
+    connection = get_flask_database_connection(app)
+    repository = AlbumRepository(connection)
+    title = request.form['title']
+    release_year = request.form['release_year']
+    artist_id = request.form['artist_id']
+    album = Album(None, title, release_year, artist_id)
+    album = repository.create(album)
+    return redirect(url_for('get_albums'))
+
+@app.route('/albums/<int:id>/delete', methods=['POST'])
+def delete_album(id):
+    connection = get_flask_database_connection(app)
+    repository = AlbumRepository(connection)
+    repository.delete(id)
+    return redirect(url_for('get_albums'))
+# Artists
+
+@app.route('/artists')
+def get_artists():
+    connection = get_flask_database_connection(app)
+    repository = ArtistRepository(connection)
+    artists = repository.all()
+    return render_template('record_store.html', artists=artists)
+
+@app.route('/artists', methods=['POST'])
+def post_artists():
+    connection = get_flask_database_connection(app)
+    repository = ArtistRepository(connection)
+    artist = Artist(
+        None,
+        request.form['name'],
+        request.form['genre']
+    )
+    repository.create(artist)
+    return '', 200
 
 
 # == Example Code Below ==
