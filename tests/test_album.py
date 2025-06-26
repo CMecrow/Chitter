@@ -15,3 +15,21 @@ def test_equality():
 def test_stringy_albums():
     album = Album(1, 'Test title', 2025, 1)
     assert str(album) == "Album(1, Test title, 2025, 1)"
+
+def test_album_validity():
+    assert Album(1, "", "", "").is_valid() == False
+    assert Album(1, "Title", "", "").is_valid() == False
+    assert Album(1, "", "2024", "").is_valid() == False
+    assert Album(1, "Title", None, "").is_valid() == False
+    assert Album(1, None, "2024", "").is_valid() == False
+    assert Album(1, "Title", "2024", "8").is_valid() == True
+    assert Album(None, "Title", "2024", "7").is_valid() == True
+
+def test_album_validity():
+    assert Album(1, "", "", "").generate_errors() == "Title can't be blank, Release Year can't be blank, Artist id can't be blank"
+    assert Album(1, "Title", "", "").generate_errors() == "Release Year can't be blank, Artist id can't be blank"
+    assert Album(1, "", "2024", "").generate_errors() == "Title can't be blank, Artist id can't be blank"
+    assert Album(1, "Title", None, "").generate_errors() == "Release Year can't be blank, Artist id can't be blank"
+    assert Album(1, None, "2024", "").generate_errors() == "Title can't be blank, Artist id can't be blank"
+    assert Album(1, "Title", "2024", "8").generate_errors() == None
+    assert Album(None, "Title", "2024", "7").generate_errors() == None

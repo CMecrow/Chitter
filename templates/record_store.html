@@ -8,15 +8,19 @@
 <body>
     {% if albums|length > 0 %}
     <h1>Albums</h1>
+    <ul class="albums_list">
     {% for album in albums %}
-    <div>
-        <h3>
-            <a href="/albums/{{album.id}}">{{album.title}}</a>
-        </h3>
-        <p>Released in: {{album.release_year}}</p>
-        <p>By Artist id: {{album.artist_id}}</p>
-    </div>
+        <li>
+            <div>
+                <h2>
+                    <a href="/albums/{{album.id}}">{{album.title}}</a>
+                </h2>
+                <p>Released in: {{album.release_year}}</p>
+                <p>By Artist id: {{album.artist_id}}</p>
+            </div>
+        </li>
     {% endfor %}
+    </ul>
     <div>
         <h3>
             <a href="/albums/new">Add a new album</a>
@@ -25,14 +29,18 @@
     {% endif %}
     {% if artists|length > 0 %}
     <h1>Artists</h1>
+    <ul class="artists_list">
     {% for artist in artists %}
-    <div>
-        <h3>
-            <a href="/artists/{{artist.id}}">{{artist.name}}</a>
-        </h3>
-        <p> Genre: {{artist.genre}}</p>
-    </div>
+        <li>
+            <div>
+                <h3>
+                    <a href="/artists/{{artist.id}}">{{artist.name}}</a>
+                </h3>
+                <p> Genre: {{artist.genre}}</p>
+            </div>
+        </li>
     {% endfor %}
+    </ul>
     <div>
         <h3>
             <a href="/artists/new">Add a new artist</a>

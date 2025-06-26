@@ -39,6 +39,8 @@ def post_album():
     release_year = request.form['release_year']
     artist_id = request.form['artist_id']
     album = Album(None, title, release_year, artist_id)
+    if not album.is_valid():
+        return render_template('new_record.html', album=album, errors=album.generate_errors()), 400
     album = repository.create(album)
     return redirect(url_for('get_albums'))
 
@@ -69,6 +71,8 @@ def post_artists():
     name = request.form['name']
     genre = request.form['genre']
     artist = Artist(None, name, genre)
+    if not artist.is_valid():
+        return render_template('new_artist.html', artist=artist, errors=artist.generate_errors()), 400
     artist = repository.create(artist)
     return redirect(url_for('get_artists'))
 
