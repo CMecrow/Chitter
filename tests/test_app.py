@@ -66,6 +66,8 @@ from playwright.sync_api import Page, expect
 
 # === End Example Code ===
 
+# Album Tests
+
 def test_get_albums(db_connection, page, test_web_address):
     db_connection.seed('seeds/record_store.sql')
     page.goto(f"http://{test_web_address}/albums")
@@ -108,6 +110,50 @@ def test_delete_album(db_connection, page, test_web_address):
     page.click("text=Create Album")
     page.click("text=Copper Gone")
     page.click("text=Delete Album")
-    album_list = page.locator(".albums_list")
+    album_list = page.locator(".album_title")
     expect(album_list).not_to_have_text("Copper Gone")
 
+# Artists Tests
+
+def test_get_artists(db_connection, page, test_web_address):
+    db_connection.seed('seeds/record_store.sql')
+    page.goto(f"http://{test_web_address}/artists")
+    artists = page.locator(".artist_name")
+    expect(artists).to_have_text('Bloc Party')
+
+def test_get_artist(db_connection, page, test_web_address):
+    db_connection.seed('seeds/record_store.sql')
+    page.goto(f"http://{test_web_address}/artists")
+    page.click("text=Bloc Party")
+    album_name = page.locator(".t-title")
+    expect(album_name).to_have_text("Name: Bloc Party")
+
+def test_create_artist(db_connection, page, test_web_address):
+    db_connection.seed('seeds/record_store.sql')
+    page.goto(f"http://{test_web_address}/artists")
+    page.click("text=Add a new artist")
+    page.fill("input[name='name']", "Spiritbox")
+    page.fill("input[name='genre']", "Metal")
+    page.click("text=Create Artist")
+    new_addition = page.locator("text=Spiritbox")
+    expect(new_addition).to_have_text("Spiritbox")
+
+def test_create_artist_error(db_connection, page, test_web_address):
+    db_connection.seed('seeds/record_store.sql')
+    page.goto(f"http://{test_web_address}/artists")
+    page.click("text=Add a new artist")
+    page.click("text=Create Artist")
+    errors = page.locator(".t-errors")
+    expect(errors).to_have_text("There were errors with your submission: Artist name can't be blank, Genre can't be blank")
+
+def test_delete_artist(db_connection, page, test_web_address):
+    db_connection.seed('seeds/record_store.sql')
+    page.goto(f"http://{test_web_address}/artists")
+    page.click("text=Add a new artist")
+    page.fill("input[name='name']", "Spiritbox")
+    page.fill("input[name='genre']", "Metal")
+    page.click("text=Create Artist")
+    page.click("text=Spiritbox")
+    page.click("text=Delete Artist")
+    album_list = page.locator(".artist_name")
+    expect(album_list).not_to_have_text("Spiritbox")

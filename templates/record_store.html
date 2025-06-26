@@ -10,10 +10,10 @@
     <h1>Albums</h1>
     <ul class="albums_list">
     {% for album in albums %}
-        <li>
+            <li>
             <div>
                 <h2>
-                    <a href="/albums/{{album.id}}">{{album.title}}</a>
+                    <a href="/albums/{{album.id}}" class="album_title">{{album.title}}</a>
                 </h2>
                 <p>Released in: {{album.release_year}}</p>
                 <p>By Artist id: {{album.artist_id}}</p>
@@ -34,7 +34,7 @@
         <li>
             <div>
                 <h3>
-                    <a href="/artists/{{artist.id}}">{{artist.name}}</a>
+                    <a href="/artists/{{artist.id}}" class="artist_name">{{artist.name}}</a>
                 </h3>
                 <p> Genre: {{artist.genre}}</p>
             </div>
