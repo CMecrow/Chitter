@@ -48,6 +48,7 @@ def delete_album(id):
     repository = AlbumRepository(connection)
     repository.delete(id)
     return redirect(url_for('get_albums'))
+
 # Artists
 
 @app.route('/artists')
@@ -57,17 +58,33 @@ def get_artists():
     artists = repository.all()
     return render_template('record_store.html', artists=artists)
 
-@app.route('/artists', methods=['POST'])
+@app.route('/artists/new')
+def get_new_artist():
+    return render_template('new_artist.html')
+
+@app.route('/artists/', methods=['POST'])
 def post_artists():
     connection = get_flask_database_connection(app)
     repository = ArtistRepository(connection)
-    artist = Artist(
-        None,
-        request.form['name'],
-        request.form['genre']
-    )
-    repository.create(artist)
-    return '', 200
+    name = request.form['name']
+    genre = request.form['genre']
+    artist = Artist(None, name, genre)
+    artist = repository.create(artist)
+    return redirect(url_for('get_artists'))
+
+@app.route('/artists/<int:id>')
+def get_artist_with_id(id):
+    connection = get_flask_database_connection(app)
+    repository = ArtistRepository(connection)
+    artist = repository.find(id)
+    return render_template('artist.html', artist=artist)
+
+@app.route('/artists/<int:id>/delete', methods=['POST'])
+def delete_artist(id):
+    connection = get_flask_database_connection(app)
+    repository = ArtistRepository(connection)
+    repository.delete(id)
+    return redirect(url_for('get_artists'))
 
 
 # == Example Code Below ==

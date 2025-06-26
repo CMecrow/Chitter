@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>{{artist.name}}</title>
+    <meta charset="utf-8">
+  </head>
+  <body>
+    <h1>Selected Artist</h1>
+    <p class="t-title">Name: {{artist.name}}</p>
+    <p class="t-author-name">Genre: {{artist.genre}}</p>
+    <form action="/artists/{{artist.id}}/delete" method="post">
+        <input type="submit" value="Delete Artist">
+    </form>
+    <a href="/artist">Back to all artists</a>
+  </body>
+</html>

@@ -17,20 +17,27 @@
         <p>By Artist id: {{album.artist_id}}</p>
     </div>
     {% endfor %}
-    {% endif %}
     <div>
         <h3>
             <a href="/albums/new">Add a new album</a>
         </h3>
     </div>
+    {% endif %}
     {% if artists|length > 0 %}
     <h1>Artists</h1>
     {% for artist in artists %}
     <div>
-        <a href="/artists/{{artist.id}}">Name: {{artist.name}} Genre: {{artist.genre}}</a>
+        <h3>
+            <a href="/artists/{{artist.id}}">{{artist.name}}</a>
+        </h3>
+        <p> Genre: {{artist.genre}}</p>
     </div>
     {% endfor %}
+    <div>
+        <h3>
+            <a href="/artists/new">Add a new artist</a>
+        </h3>
+    </div>
     {% endif %}
-    <!-- <a href="/artists/new">Add a new book</a> -->
 </body>
 </html>
