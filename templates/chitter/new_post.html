@@ -1,0 +1,25 @@
+{% extends "chitter/header.html" %}
+{% block body %}
+<div class="page" id="new-post-page">
+
+  <h1 class="page-title">New Post</h1>
+
+  {% if errors %}
+    <div class="error-banner" id="new-post-errors">
+      <p>There were errors with your submission: {{ errors }}</p>
+    </div>
+  {% endif %}
+
+  <form action="/posts" method="post" class="form" id="new-post-form">
+    <div class="form-group">
+      <label for="post_content" class="form-label">Post</label>
+      <input type="text" name="post" id="post_content" class="form-input">
+    </div>
+
+    <div class="form-actions">
+      <input type="submit" value="Create Post" class="form-button">
+    </div>
+  </form>
+
+</div>
+{% endblock %}

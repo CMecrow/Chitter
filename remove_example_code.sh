@@ -14,7 +14,7 @@ if [ "$response" != "y" ]; then
 fi
 
 rm lib/book_repository.py
-rm lib/book.py
+rm lib/book_repository.py
 rm tests/test_book_repository.py
 rm tests/test_book.py
 rm tests/test_example_routes.py

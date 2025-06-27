@@ -1,0 +1,36 @@
+{% extends "chitter/header.html" %}
+{% block body %}
+<div class="page" id="login-page">
+
+  <h1 class="page-title">Login</h1>
+
+  {% if errors %}
+    <div class="error-banner" id="login-errors">
+      <p>There were errors with your submission: {{ errors }}</p>
+    </div>
+  {% endif %}
+
+  {% if message %}
+    <div class="message-banner" id="login-message">
+      <p>{{ message }}</p>
+    </div>
+  {% endif %}
+
+  <form action="/login" method="post" class="form" id="login-form">
+    <div class="form-group">
+      <label for="username" class="form-label">Username</label>
+      <input type="text" name="username" id="username" class="form-input">
+    </div>
+
+    <div class="form-group">
+      <label for="password" class="form-label">Password</label>
+      <input type="password" name="password" id="password" class="form-input">
+    </div>
+
+    <div class="form-actions">
+      <input type="submit" value="Login" class="form-button">
+    </div>
+  </form>
+
+</div>
+{% endblock %}

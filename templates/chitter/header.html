@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chitter</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body class="layout">
+
+  <header class="header">
+    <h1 class="logo"><a href="/posts">Chitter</a></h1>
+  </header>
+  {% if username %}
+    <div class="user-notice">
+      Logged in as <strong>{{ username }}</strong>
+    </div>
+  {% endif %}
+  <main class="main-content" id="main-content">
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        <ul class="flash-messages" id="flash-messages">
+          {% for message in messages %}
+            <li class="flash-message">{{ message }}</li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+    {% endwith %}
+
+    {% block body %}{% endblock %}
+  </main>
+
+  <footer class="footer">
+    
+  </footer>
+
+</body>
+</html>

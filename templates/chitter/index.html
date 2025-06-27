@@ -1,0 +1,35 @@
+{% extends "chitter/header.html" %}
+{% block body %}
+<div class="page" id="home-page">
+
+  <nav class="nav-bar" id="main-nav">
+    <a href="/login" class="nav-link">Login</a>
+    <a href="/register" class="nav-link">Register</a>
+  </nav>
+
+  {% if message %}
+    <div class="message-banner" id="message-banner">
+      <h3>{{ message }}</h3>
+    </div>
+  {% endif %}
+
+  <section class="posts-section" id="posts-section">
+    <h1 class="section-title">Posts</h1>
+    <ul class="posts-list" id="posts-list">
+      {% for post in posts %}
+        <li class="post-item">
+          <div class="post-card">
+            <p class="post-content">{{ post.post_content }}</p>
+            <p class="post-timestamp">{{ post.post_datetime }}</p>
+          </div>
+        </li>
+      {% endfor %}
+    </ul>
+  </section>
+
+  <div class="create-post-link" id="create-post-link">
+    <h3><a href="/posts/new" class="button">Create a New Post</a></h3>
+  </div>
+
+</div>
+{% endblock %}
